@@ -1,15 +1,17 @@
 <!--
-from:		Michael Pohoreski <michael.pohoreski@gmail.com>
-to:			Jason Doucette <jason@xona.com>
-cc:			Dave Voyles <dnvoyles@gmail.com>,
-			Matthew Doucette <matt@xona.com>
-date:	Jan 9, 2015, 11:26 PM
-subject:	Re: What's your favorite “programmer” cartoon?
+ORIGINAL SOURCE:	Michael Pohoreski <michael.pohoreski@gmail.com>
+					Jan 9, 2015, 11:26 PM
+					Email subject: Re: What's your favorite “programmer” cartoon?
+MODIFIED:	Jason Allen Doucette
+			Jan 12, 2019, 1:58 am
 -->
-
 <html>
+    <body onload="main()">
+        <canvas id="MyCanvas" width="1536" height="1536"></canvas>
+    </body>
     <head>
         <script>
+			// graphics
             var hCanvas  = undefined;
             var hContext = undefined;
             var nCanvasW = 0;
@@ -18,53 +20,48 @@ subject:	Re: What's your favorite “programmer” cartoon?
             var aTexels  = undefined;
 
             var nTimerId = 0;
+			
+			// points
+			var nPoints = 3;  // Sierpinski Triangle
+			var nPoints = 5;
+			var px = new Array(nPoints);
+			var py = new Array(nPoints);
+			var cx = undefined;
+			var cy = undefined;
 
-            var nPoints  = 0;
-            var px = new Array(4);
-            var py = new Array(4);
-
-
-            function plot( x,y,r,g,b,a )
+            function plot( x, y, r, g, b, a )
             {
-                var i   = (y*nCanvasW + x)*4; // 32-bit RGBA
-                if( r === undefined ) r = (Math.random() * 255) | 0;
-                if( g === undefined ) g = (Math.random() * 255) | 0;
-                if( b === undefined ) b = (Math.random() * 255) | 0;
-                if( a === undefined ) a = 255;
-
-                aTexels[i+0] = r;
-                aTexels[i+1] = g;
-                aTexels[i+2] = b;
-                aTexels[i+3] = a;
-            }
-
-            function randXY()
-            {
-                return {
-                    x: (Math.random() * nCanvasW) | 0,
-                    y: (Math.random() * nCanvasH) | 0
-                };
+                var i = (y * nCanvasW + x) * 4; // 32-bit RGBA
+                aTexels[i + 0] = r;
+                aTexels[i + 1] = g;
+                aTexels[i + 2] = b;
+                aTexels[i + 3] = a;
             }
 
             function init()
             {
-                var x, y, p;
-                for( var i = 0; i < px.length; i++ )
+                for( var i = 0; i < nPoints; i++ )
                 {
-                    p = randXY();
-                    px[i] = p.x;
-                    py[i] = p.y;
-                    plot( p.x, p.y );
+					angle = i * Math.PI * 2.0 / nPoints;
+                    px[i] = nCanvasW / 2.0 + Math.cos(angle) * nCanvasW / 2.0;
+                    py[i] = nCanvasH / 2.0 + Math.sin(angle) * nCanvasH / 2.0;
+					plot( Math.floor(px[i]), Math.floor(py[i]), 0,0,0,255 );
                 }
+				cx = px[0];
+				cy = py[0];
             }
 
             function update()
             {
-                var i = (3  *Math.random()+1) | 0;
-                px[0] = (0.5*(px[0] + px[i])) | 0;
-                py[0] = (0.5*(py[0] + py[i])) | 0;
-                plot( px[0], py[0] );
-                    hContext.putImageData( tImage, 0, 0 );
+				for (var j = 0; j < 10000; j++ )
+				{
+					var i = Math.floor(nPoints * Math.random());
+					cx = (cx + px[i]) / 2;
+					cy = (cy + py[i]) / 2;
+					//plot( Math.floor(nCanvasW * Math.random()), Math.floor(nCanvasH * Math.random()), 255,0,0,255 );
+					plot( Math.floor(cx), Math.floor(cy), 0,0,0,255 );
+				}
+				hContext.putImageData( tImage, 0, 0 );
             }
 
             function main()
@@ -73,14 +70,12 @@ subject:	Re: What's your favorite “programmer” cartoon?
                 hContext = hCanvas.getContext("2d");
                 nCanvasW = hCanvas.width;
                 nCanvasH = hCanvas.height;
-                tImage   = hContext.getImageData( 0,0,nCanvasW,nCanvasH);
+                tImage   = hContext.getImageData(0, 0, nCanvasW, nCanvasH);
                 aTexels  = tImage.data; 
 
                 init();
-                nTimerId = setInterval( function() { update(); }, 10 );
+                nTimerId = setInterval( function() { update(); }, 1000 / 60 );
             }
         </script>
-    <body onload="main()">
-        <canvas id="MyCanvas" width="256" height="256"></canvas>
-    </body>
+	</head>
 </html>
