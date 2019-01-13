@@ -8,6 +8,8 @@ MODIFIED:	Jason Allen Doucette
 <html>
     <head>
         <script>
+            "use strict";
+
 			// graphics
             var hCanvas  = undefined;
             var hContext = undefined;
@@ -19,7 +21,7 @@ MODIFIED:	Jason Allen Doucette
             var nTimerId = 0;
 			
 			// points
-			var nPoints = 3;  // Sierpinski Triangle
+//			var nPoints = 3;  // Sierpinski Triangle
 			var nPoints = 5;
 			var px = new Array(nPoints);
 			var py = new Array(nPoints);
@@ -37,6 +39,7 @@ MODIFIED:	Jason Allen Doucette
 
             function init()
             {
+                var angle;
                 for( var i = 0; i < nPoints; i++ )
                 {
 					angle = i * Math.PI * 2.0 / nPoints;
