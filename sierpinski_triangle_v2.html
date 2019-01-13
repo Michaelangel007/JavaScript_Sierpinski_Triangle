@@ -10,7 +10,7 @@ MODIFIED:	Jason Allen Doucette
         <script>
             "use strict";
 
-			// graphics
+            // graphics
             var hCanvas  = undefined;
             var hContext = undefined;
             var nCanvasW = 0;
@@ -19,14 +19,14 @@ MODIFIED:	Jason Allen Doucette
             var aTexels  = undefined;
 
             var nTimerId = 0;
-			
-			// points
-//			var nPoints = 3;  // Sierpinski Triangle
-			var nPoints = 5;
-			var px = new Array(nPoints);
-			var py = new Array(nPoints);
-			var cx = undefined;
-			var cy = undefined;
+
+            // points
+//          var nPoints = 3;  // Sierpinski Triangle
+            var nPoints = 5;
+            var px = new Array(nPoints);
+            var py = new Array(nPoints);
+            var cx = undefined;
+            var cy = undefined;
 
             function plot( x, y, r, g, b, a )
             {
@@ -42,26 +42,26 @@ MODIFIED:	Jason Allen Doucette
                 var angle;
                 for( var i = 0; i < nPoints; i++ )
                 {
-					angle = i * Math.PI * 2.0 / nPoints;
+                    angle = i * Math.PI * 2.0 / nPoints;
                     px[i] = nCanvasW / 2.0 + Math.cos(angle) * nCanvasW / 2.0;
                     py[i] = nCanvasH / 2.0 + Math.sin(angle) * nCanvasH / 2.0;
-					plot( Math.floor(px[i]), Math.floor(py[i]), 0,0,0,255 );
+                    plot( Math.floor(px[i]), Math.floor(py[i]), 0,0,0,255 );
                 }
-				cx = px[0];
-				cy = py[0];
+                cx = px[0];
+                cy = py[0];
             }
 
             function update()
             {
-				for (var j = 0; j < 10000; j++ )
-				{
-					var i = Math.floor(nPoints * Math.random());
-					cx = (cx + px[i]) / 2;
-					cy = (cy + py[i]) / 2;
-					//plot( Math.floor(nCanvasW * Math.random()), Math.floor(nCanvasH * Math.random()), 255,0,0,255 );
-					plot( Math.floor(cx), Math.floor(cy), 0,0,0,255 );
-				}
-				hContext.putImageData( tImage, 0, 0 );
+                for (var j = 0; j < 10000; j++ )
+                {
+                    var i = Math.floor(nPoints * Math.random());
+                    cx = (cx + px[i]) / 2;
+                    cy = (cy + py[i]) / 2;
+                    //plot( Math.floor(nCanvasW * Math.random()), Math.floor(nCanvasH * Math.random()), 255,0,0,255 );
+                    plot( Math.floor(cx), Math.floor(cy), 0,0,0,255 );
+                }
+                hContext.putImageData( tImage, 0, 0 );
             }
 
             function main()
@@ -77,7 +77,7 @@ MODIFIED:	Jason Allen Doucette
                 nTimerId = setInterval( function() { update(); }, 1000 / 60 );
             }
         </script>
-	</head>
+    </head>
     <body onload="main()">
         <canvas id="MyCanvas" width="1536" height="1536"></canvas>
     </body>
