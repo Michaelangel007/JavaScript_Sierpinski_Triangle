@@ -89,6 +89,6 @@ MODIFIED:	Jason Allen Doucette
             main();
         </script>
     </head>
-    <body onload="if( main ) main()">
+    <body onload="if( typeof window['main'] === 'function' ) main()">
     </body>
 </html>
