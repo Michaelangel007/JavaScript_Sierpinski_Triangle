@@ -66,7 +66,16 @@ MODIFIED:	Jason Allen Doucette
 
             function main()
             {
-                hCanvas  = document.getElementById("MyCanvas");
+                // Unify local and remote (HTMLPreview)
+                if( !document.body || hCanvas )
+                    return;
+
+                // Dynamically insert canvas into body
+                hCanvas        = document.createElement( 'canvas' ); // document.getElementById("MyCanvas");
+                hCanvas.width  = 1536;
+                hCanvas.height = 1536;
+                document.body.appendChild( hCanvas );
+
                 hContext = hCanvas.getContext("2d");
                 nCanvasW = hCanvas.width;
                 nCanvasH = hCanvas.height;
@@ -76,9 +85,10 @@ MODIFIED:	Jason Allen Doucette
                 init();
                 nTimerId = setInterval( function() { update(); }, 1000 / 60 );
             }
+
+            main();
         </script>
     </head>
     <body onload="main()">
-        <canvas id="MyCanvas" width="1536" height="1536"></canvas>
     </body>
 </html>
